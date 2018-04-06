@@ -16,7 +16,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/logout','Auth\LogoutController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/profile','ProfileController@index')->name('profile');
+Route::get('/profile','ProfileController@index')->name('profile')->middleware('auth');
+
+Route::get('/', function (){
+   return view('main');
+})->middleware('auth');
