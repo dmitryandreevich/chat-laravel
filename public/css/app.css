@@ -18,7 +18,16 @@ main{
     background-color: #f5f5f5;
 }
 main > .container{
+    padding: 15px 0;
     min-height: 350px;
     box-shadow: 0 3px 10px #9a9a9a;
     background-color: white;
+}
+.photo-profile{
+    width: 20%;
+}
+
+.messages,.messages-private{
+    height: 300px;
+    overflow-y: scroll;
 }
