@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
 
 </head>
 <body>
@@ -28,6 +29,7 @@
                         <a href="{{ route('register') }}">Регистрация</a>
                     @else
                         <a href="{{ route('profile') }}">Профиль</a>
+                        <a href="{{ route('sharedChat') }}">Общий чат</a>
                         <a href="{{ route('logout') }}">Выйти</a>
 
 

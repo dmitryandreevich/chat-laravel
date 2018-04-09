@@ -6,7 +6,6 @@
         <div class="col-md-6 offset-md-3">
             <div class="card card-default">
                 <div class="card-header">Вход</div>
-
                 <div class="card-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
@@ -16,7 +15,6 @@
 
                             <div class="col-md-12">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>

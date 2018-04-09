@@ -87,7 +87,24 @@
                                 <textarea class="form-control" name="aboutMe" id="aboutMe" cols="30" rows="10"></textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="country" class="col-md-4 control-label">Страна</label>
 
+                            <div class="col-md-12">
+                                <select name="country" id="country" class="form-control">
+                                    <option value="Казахстан">Казахстан</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" class="col-md-4 control-label">Город</label>
+
+                            <div class="col-md-12">
+                                <select name="city" id="city" class="form-control">
+                                    <option value="Петропавловск">Петропавловск</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Пароль</label>
 

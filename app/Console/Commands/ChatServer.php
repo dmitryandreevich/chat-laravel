@@ -15,7 +15,7 @@ class ChatServer extends Command
      *
      * @var string
      */
-    protected $signature = 'chat_server:start';
+    protected $signature = 'chat:serve';
 
     /**
      * The console command description.
@@ -41,16 +41,16 @@ class ChatServer extends Command
      */
     public function handle()
     {
-    $this->info('Start server');
-    $server = IoServer::factory(
-        new HttpServer(
-            new WsServer(
-                new Chat()
-            )
-        ),
-        8080
-    );
+        $this->info('Start server');
+        $server = IoServer::factory(
+            new HttpServer(
+                new WsServer(
+                    new Chat()
+                )
+            ),
+            8080
+        );
 
-    $server->run();
+        $server->run();
     }
 }
