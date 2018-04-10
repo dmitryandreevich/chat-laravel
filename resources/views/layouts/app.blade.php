@@ -19,22 +19,33 @@
 <body>
     <header class="header" id="header">
         <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-md-4">
-                    <a href="/">Social network</a>
-                </div>
-                <div class="col-md-4">
-                    @guest
-                        <a href="{{ route('login') }}">Вход</a>
-                        <a href="{{ route('register') }}">Регистрация</a>
-                    @else
-                        <a href="{{ route('profile') }}">Профиль</a>
-                        <a href="{{ route('sharedChat') }}">Общий чат</a>
-                        <a href="{{ route('logout') }}">Выйти</a>
+            <div class="row">
+
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="#">SOC</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            @guest
+                                <a class="nav-item nav-link active" href="{{ route('login') }}">Вход</a>
+                                <a class="nav-item nav-link active" href="{{ route('register') }}">Регистрация</a>
+                            @else
+                                <a class="nav-item nav-link active" href="{{ route('profile') }}">Профиль</a>
+                                <a class="nav-item nav-link active" href="{{ route('people') }}">Люди</a>
+                                <a class="nav-item nav-link active" href="{{ 'friends' }}">Друзья</a>
+                                <a class="nav-item nav-link active" href="{{ route('sharedChat') }}">Общий чат</a>
+                                <a class="nav-item nav-link active" href="{{ route('logout') }}">Выйти</a>
 
 
-                        <span class="badge badge-danger">{{ Auth::user()->name }}</span>
-                    @endguest
+                            @endguest
+
+                        </div>
+                    </div>
+                </nav>
+                <div class="col-md-6">
+
                 </div>
             </div>
         </div>

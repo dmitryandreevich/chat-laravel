@@ -8,7 +8,6 @@ header a, footer a{
     color: white;
 }
 header{
-    background-color: #2c5578;
 
 }
 footer{
@@ -30,4 +29,10 @@ main > .container{
 .messages,.messages-private{
     height: 300px;
     overflow-y: scroll;
+}
+.navbar{
+    color: white;
+}
+navbar-nav a{
+    color: white;
 }

@@ -20,6 +20,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile','ProfileController@index')->name('profile')->middleware('auth');
 Route::get('/profile/id{user}','ProfileController@show')->name('profileShow')->middleware('auth');
 
+Route::get('/people','PeopleController@index')->name('people')->middleware('auth');
+
 Route::get('/chat/shared','ChatController@index')->name('sharedChat')->middleware('auth');
 
 Route::get('/', function (){
