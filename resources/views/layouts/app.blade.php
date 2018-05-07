@@ -18,7 +18,7 @@
 </head>
 <body>
     <header class="header" id="header">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between no-gutters">
             <div class="col-md-4">
                 <p class="title">Social network</p>
             </div>
@@ -28,18 +28,26 @@
         </div>
     </header>
     <div class="site-main">
-        <div class="row">
+        <div class="row no-gutters">
             <div class="col-md-2">
                 <div class="left-sidebar">
                     <nav>
                         <ul>
                             @guest
                                 <li><a href="{{ route('login') }}"><span class="text-link">Вход</span></a></li>
-                                <a href="{{ route('register') }}"><span class="text-link">Регистрация</span></a></li>
+                                <li><a href="{{ route('register') }}"><span class="text-link">Регистрация</span></a></li>
                             @else
                                 <li><a href="{{ route('profile') }}"><span class="text-link">Профиль</span></a></li>
                                 <li><a href="{{ route('people') }}"><span class="text-link">Люди</span></a></li>
-                                <li><a href="{{ 'friends' }}"><span class="text-link">Друзья</span></a></li>
+                                <li class="dropdown-link"><a href="{{ 'friends' }}">
+                                        <span class="text-link">Друзья <span class="dropdown-toggle"></span> </span>
+                                    </a>
+                                    <ul class="drop-list">
+                                        <li><a href="">Все</a></li>
+                                        <li><a href="">Заявки</a></li>
+                                    </ul>
+                                </li>
+
                                 <li><a href="{{ route('sharedChat') }}"><span class="text-link">Общий чат</span></a></li>
                                 <li><a  href="{{ route('logout') }}"><span class="text-link">Выйти</span></a></li>
 
@@ -58,55 +66,10 @@
         </div>
     </div>
 
-
-
-    <!--
-    <header class="header" id="header">
-        <div class="container">
-            <div class="row">
-
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="#">SOC</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            @guest
-        <a class="nav-item nav-link active" href="{{ route('login') }}">Вход</a>
-                                <a class="nav-item nav-link active" href="{{ route('register') }}">Регистрация</a>
-                            @else
-        <a class="nav-item nav-link active" href="{{ route('profile') }}">Профиль</a>
-                                <a class="nav-item nav-link active" href="{{ route('people') }}">Люди</a>
-                                <a class="nav-item nav-link active" href="{{ 'friends' }}">Друзья<span class="badge badge-info">{{ \App\Http\Controllers\FriendsController::getCountFriends(Auth::user()->id) }}</span></a>
-                                <a class="nav-item nav-link active" href="{{ route('sharedChat') }}">Общий чат</a>
-                                <a class="nav-item nav-link active" href="{{ route('logout') }}">Выйти</a>
-
-
-                            @endguest
-
-                        </div>
-                    </div>
-                </nav>
-                <div class="col-md-6">
-
-                </div>
-            </div>
-        </div>
-    </header>
-    <main class="main" id="main">
-        <div class="container">
-            @yield('content')
-        </div>
-    </main>
-
-    <footer class="footer" id="footer">
-        <div class="container">
-            <div class="row">header</div>
-        </div>
-    </footer>
-    -->
-    <!-- Scripts -->
-
+    <script>
+        $('.dropdown-link').hover(function () {
+           $(this).find('.drop-list').slideToggle();
+        });
+    </script>
 </body>
 </html>
