@@ -18,6 +18,50 @@
 </head>
 <body>
     <header class="header" id="header">
+        <div class="row justify-content-between">
+            <div class="col-md-4">
+                <p class="title">Social network</p>
+            </div>
+            <div class="col-md-2">
+                <p><a href="">Гость.</a></p>
+            </div>
+        </div>
+    </header>
+    <div class="site-main">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="left-sidebar">
+                    <nav>
+                        <ul>
+                            @guest
+                                <li><a href="{{ route('login') }}"><span class="text-link">Вход</span></a></li>
+                                <a href="{{ route('register') }}"><span class="text-link">Регистрация</span></a></li>
+                            @else
+                                <li><a href="{{ route('profile') }}"><span class="text-link">Профиль</span></a></li>
+                                <li><a href="{{ route('people') }}"><span class="text-link">Люди</span></a></li>
+                                <li><a href="{{ 'friends' }}"><span class="text-link">Друзья</span></a></li>
+                                <li><a href="{{ route('sharedChat') }}"><span class="text-link">Общий чат</span></a></li>
+                                <li><a  href="{{ route('logout') }}"><span class="text-link">Выйти</span></a></li>
+
+                            @endguest
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <main class="main" id="main">
+                    <div class="container">
+                        @yield('content')
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--
+    <header class="header" id="header">
         <div class="container">
             <div class="row">
 
@@ -29,10 +73,10 @@
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             @guest
-                                <a class="nav-item nav-link active" href="{{ route('login') }}">Вход</a>
+        <a class="nav-item nav-link active" href="{{ route('login') }}">Вход</a>
                                 <a class="nav-item nav-link active" href="{{ route('register') }}">Регистрация</a>
                             @else
-                                <a class="nav-item nav-link active" href="{{ route('profile') }}">Профиль</a>
+        <a class="nav-item nav-link active" href="{{ route('profile') }}">Профиль</a>
                                 <a class="nav-item nav-link active" href="{{ route('people') }}">Люди</a>
                                 <a class="nav-item nav-link active" href="{{ 'friends' }}">Друзья<span class="badge badge-info">{{ \App\Http\Controllers\FriendsController::getCountFriends(Auth::user()->id) }}</span></a>
                                 <a class="nav-item nav-link active" href="{{ route('sharedChat') }}">Общий чат</a>
@@ -61,7 +105,7 @@
             <div class="row">header</div>
         </div>
     </footer>
-
+    -->
     <!-- Scripts -->
 
 </body>
