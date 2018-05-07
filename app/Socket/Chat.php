@@ -8,62 +8,59 @@
 
 namespace App\Socket;
 use App\Socket\Base\BaseSocket;
+use App\Socket\Base\ChatClient;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Ratchet\ConnectionInterface;
+use Ratchet\MessageComponentInterface;
 
-class Chat extends BaseSocket
-{
+class Chat implements MessageComponentInterface {
     protected $clients;
-
+    protected $authUsers;
     public function __construct() {
         $this->clients = new \SplObjectStorage;
+        $this->authUsers = array();
     }
 
     public function onOpen(ConnectionInterface $conn) {
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
-        // Create a new session handler for this client
-        $session = (new SessionManager(App::getInstance()))->driver();
-        // Get the cookies
-        $cookies = $conn->httpRequest->getHeader('Cookie');
-        // Get the laravel's one
-        $laravelCookie = urldecode($cookies[Config::get('session.cookie')]);
-        // get the user session id from it
-        $idSession = Crypt::decrypt($laravelCookie);
-        // Set the session id to the session handler
-        $session->setId($idSession);
-        // Bind the session handler to the client connection
-        $conn->session = $session;
+
+        $this->authUsers[$conn->resourceId] = new ChatClient($conn, null);
 
         echo "New connection! ({$conn->resourceId})\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-        // start the session when the user send a message
-        // (refreshing it to be sure that we have access to the current state of the session)
-        $from->session->start();
-        // do what you wants with the session
-        // for example you can test if the user is auth and get his id back like this:
-        $idUser = $from->session->get(Auth::getName());
-        if (!isset($idUser)) {
-            echo "the user is not logged via an http session";
-        } else {
-            $currentUser = User::find($idUser);
+        $numRecv = count($this->clients) - 1;
+//        echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
+  //          , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+        $message = json_decode($msg);
+
+        switch ($message->type){
+            case 'connect':{
+
+                $decryptJsonUser = Crypt::decrypt($message->value);
+                $user = json_decode($decryptJsonUser);
+                self::getUserByConnId($from->resourceId)->info = $user;
+
+                foreach ($this->clients as $client)
+                    $client->send('hello от '.self::getUserByConnId($from->resourceId)->info->name);
+
+                break;
+            }
         }
-        // or you can save data to the session
-        $from->session->put('foo', 'bar');
-        // ...
-        // and at the end. save the session state to the store
-        $from->session->save();
+        self::getConnectionByUserId(1);
     }
 
     public function onClose(ConnectionInterface $conn) {
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
+        unset($this->authUsers[$conn->resourceId]);
 
+        
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
 
@@ -71,5 +68,14 @@ class Chat extends BaseSocket
         echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
+    }
+    private function getConnectionByUserId($id){
+        foreach ($this->authUsers as $resourceId  => $authUser) {
+            if($authUser->info->id === $id)
+                return $authUser->conn;
+        }
+    }
+    private function getUserByConnId($id){
+        return $this->authUsers[$id];
     }
 }

@@ -34,7 +34,7 @@
                             @else
                                 <a class="nav-item nav-link active" href="{{ route('profile') }}">Профиль</a>
                                 <a class="nav-item nav-link active" href="{{ route('people') }}">Люди</a>
-                                <a class="nav-item nav-link active" href="{{ 'friends' }}">Друзья</a>
+                                <a class="nav-item nav-link active" href="{{ 'friends' }}">Друзья<span class="badge badge-info">{{ \App\Http\Controllers\FriendsController::getCountFriends(Auth::user()->id) }}</span></a>
                                 <a class="nav-item nav-link active" href="{{ route('sharedChat') }}">Общий чат</a>
                                 <a class="nav-item nav-link active" href="{{ route('logout') }}">Выйти</a>
 

@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('secondName');
             $table->string('middleName');
+            $table->string('sex');
             $table->string('phoneNumber');
             $table->string('country');
             $table->string('city');

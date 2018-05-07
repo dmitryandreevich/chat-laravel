@@ -17,12 +17,22 @@ Route::get('/logout','Auth\LogoutController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/profile','ProfileController@index')->name('profile')->middleware('auth');
-Route::get('/profile/id{user}','ProfileController@show')->name('profileShow')->middleware('auth');
+Route::group(['middleware' => 'auth','prefix' => '/profile'], function (){
+    Route::get('/','ProfileController@index')->name('profile');
+    Route::get('/id{user}','ProfileController@show')->name('profileShow');
+});
+Route::group(['middleware' => 'auth','prefix' => 'friends'],function (){
+    Route::get('/', 'FriendsController@index')->name('friends');
+    Route::get('/requests', 'FriendsController@requests')->name('requests');
+    Route::get('/add/id{user}', 'FriendsController@sendRequest')->name('friendsSendRequest');
+    Route::get('/delete/id{user}','FriendsController@cancelRequest')->name('friendsCancelRequest');
+    Route::get('/accept/id{user}','FriendsController@acceptRequest')->name('friendsAcceptRequest');
+});
 
 Route::get('/people','PeopleController@index')->name('people')->middleware('auth');
 
 Route::get('/chat/shared','ChatController@index')->name('sharedChat')->middleware('auth');
+
 
 Route::get('/', function (){
    return view('main');

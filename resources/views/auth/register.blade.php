@@ -105,6 +105,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="sex" class="col-md-4 control-label">Пол</label>
+                            <div class="radio">
+                                <label><input type="radio" name="sex" value="Мужской">Мужской</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="sex" value="Женский">Женский</label>
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Пароль</label>
 
@@ -118,7 +127,7 @@
                                 @endif
                             </div>
                         </div>
-
+                
                         <div class="form-group">
                             <label for="password-confirm" class="col-md-6 control-label">Подтвердите пароль</label>
 

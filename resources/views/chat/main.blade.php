@@ -32,10 +32,15 @@
                 var socket = new WebSocket("ws://localhost:8080");
 
                 socket.onopen = function(){
-
+                    <?php
+                         $jsonUser = json_encode(\Illuminate\Support\Facades\Auth::user());
+                         $encryptedJsonUser = \Illuminate\Support\Facades\Crypt::encrypt($jsonUser);
+                    ?>
+                    var openMessage = {'type':'connect', 'value' : '<?= $encryptedJsonUser ?>'};
+                    socket.send(JSON.stringify(openMessage));
                 };
                 socket.onmessage = function(event){
-
+                    console.log(event.data);
                 }
                 socket.onclose = function(event){
 

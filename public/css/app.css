@@ -36,3 +36,9 @@ main > .container{
 navbar-nav a{
     color: white;
 }
+.friends-navigation ul{
+    padding: 0 5px;
+}
+.friends-navigation ul li{
+    list-style: none;
+}
