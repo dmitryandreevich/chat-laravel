@@ -64,7 +64,6 @@ class Chat implements MessageComponentInterface {
                 $response = $this->createMessageTemplate('message-all',
                     ['senderid' => $sender->info->id, 'sendername' => $sender->info->name,
                         'sendersecondname' => $sender->info->secondName, 'message' => $message->value]);
-                var_dump(json_encode($response));
                 $this->sendMessageAll(json_encode($response)); // отправляем всем пользователям сформированный ответ
             }
         }
@@ -77,7 +76,6 @@ class Chat implements MessageComponentInterface {
         // Чтобы клиентская часть смогла обработать это событие у всех
         $closedUserId = $this->authUsers[$conn->resourceId]->info->id;
         $message = json_encode($this->createMessageTemplate('user-close', $closedUserId));
-        var_dump($message);
         foreach ($this->clients as $client)
             $client->send($message);
 
@@ -106,7 +104,6 @@ class Chat implements MessageComponentInterface {
     private function sendAllUsers(ConnectionInterface $conn){
         $message = $this->createMessageTemplate('connect', []);
         $jsonMessage = null;
-        var_dump($message);
         foreach ($this->authUsers as $user) {
             if($user->info !== null) {
                 var_dump($user->info);
@@ -114,7 +111,6 @@ class Chat implements MessageComponentInterface {
                     ['id' => $user->info->id, 'firstname' => $user->info->name, 'secondname' => $user->info->secondName]);
             }
             $jsonMessage = json_encode($message);
-            var_dump($jsonMessage);
         }
         $conn->send($jsonMessage);
 
