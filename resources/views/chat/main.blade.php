@@ -61,13 +61,20 @@
                     },
                     function () { // if new user join into chat
                         addUser(message.value);
+                    },
+                    () =>{ // if user will disconected
+                        console.log(message);
+                        deleteUser(message.value);
                     }
                 )
 
 
             }
             socket.onclose = function(event){
-                
+                let message = JSON.parse(event.data);
+
+                console.log(message);
+                deleteUser(message.value);
             }
             socket.onerror = function(event){
 

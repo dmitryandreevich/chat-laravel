@@ -64,6 +64,15 @@ class Chat implements MessageComponentInterface {
     public function onClose(ConnectionInterface $conn) {
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
+        // Когда пользователь закрывает соединение с WS, отправляем всем клиентам эту информацию
+        // Чтобы клиентская часть смогла обработать это событие у всех
+        $closedUserId = $this->authUsers[$conn->resourceId]->info->id;
+        $message = json_encode($this->createMessageTemplate('user-close', $closedUserId));
+        var_dump($message);
+        foreach ($this->clients as $client)
+            $client->send($message);
+
+
         unset($this->authUsers[$conn->resourceId]);
 
         

@@ -18,16 +18,21 @@ function addUser(data) {
 
 }
 function deleteUser(id) {
-    $('#online-users').find('.id'+id).remove();
+    $('#online-users').find('.id-'+id).remove();
 }
-function receiver(message,onConnect,onJoinUser) {
+function receiver(message,onConnect,onJoinUser, onUserClose) {
     switch(message.type){
         case 'connect':{
             onConnect();
 
             break; }
-        case 'user-join':{
-            onJoinUser(); break;
+        case 'user-join': {
+            onJoinUser();
+            break;
+        }
+        case 'user-close':{
+            onUserClose();
+            break;
         }
     }
 }
