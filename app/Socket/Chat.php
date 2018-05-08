@@ -36,9 +36,9 @@ class Chat implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-        $numRecv = count($this->clients) - 1;
-//        echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-  //          , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+        $numRecv = count($this->clients) - 1; // count current users online
+
+
         $message = json_decode($msg);
 
         switch ($message->type){
@@ -57,8 +57,17 @@ class Chat implements MessageComponentInterface {
 
                 break;
             }
+            // если пришёл запрос на отправку сообщения всем пользователям
+            // формируем ответ, содержащий информацию о получателе и само сообщение
+            case 'message-all':{
+                $sender = $this->getUserByConnId($from->resourceId);
+                $response = $this->createMessageTemplate('message-all',
+                    ['senderid' => $sender->info->id, 'sendername' => $sender->info->name,
+                        'sendersecondname' => $sender->info->secondName, 'message' => $message->value]);
+                var_dump(json_encode($response));
+                $this->sendMessageAll(json_encode($response)); // отправляем всем пользователям сформированный ответ
+            }
         }
-        self::getConnectionByUserId(1);
     }
 
     public function onClose(ConnectionInterface $conn) {
@@ -93,6 +102,7 @@ class Chat implements MessageComponentInterface {
     private function getUserByConnId($id){
         return $this->authUsers[$id];
     }
+    // необходим для отправки всех пользователей определенному соединению
     private function sendAllUsers(ConnectionInterface $conn){
         $message = $this->createMessageTemplate('connect', []);
         $jsonMessage = null;
@@ -109,6 +119,10 @@ class Chat implements MessageComponentInterface {
         $conn->send($jsonMessage);
 
         return false;
+    }
+    private function sendMessageAll($message){
+        foreach ($this->clients as $client)
+            $client->send($message);
     }
     protected function createMessageTemplate($type, $args){
         return ['type' => $type, 'value' => $args];

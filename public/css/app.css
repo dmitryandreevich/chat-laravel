@@ -71,6 +71,11 @@ main{
     height: 300px;
     overflow-y: scroll;
 }
+.message .name{
+    font-weight: bold;
+    color: #2b4f78;
+    margin: 0;
+}
 
 .friends-navigation ul{
     padding: 0 5px;

@@ -17,6 +17,7 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/ChatClient.js') }}"></script>
+    <script src="{{ asset('js/ion.sound.min.js') }}"></script>
 
 </head>
 <body>
@@ -70,7 +71,20 @@
     </div>
 
     <script>
-        $('#menu').menu();
+        // Main js script
+        $(document).ready(function () {
+            ion.sound({
+                sounds: [
+                    {
+                        name: "message"
+                    },
+                ],
+                volume: 0.5,
+                path: "<?php echo asset('audio').'/' ?>",
+                preload: true
+            });
+
+        });
         $('.dropdown-link').hover(function () {
            $(this).find('.drop-list').slideToggle();
         });

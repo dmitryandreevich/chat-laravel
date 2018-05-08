@@ -15,12 +15,28 @@ function addUser(data) {
     `;
     usersMenu.append(block);
     usersMenu.menu('refresh');
+}
+function appendNewMessage(data) {
+    let messages = $('.messages');
+    let block = `
+        <div class="message">
+            <div class="sender">
+                <p class="name">${data.sendername}</p>
+            </div>
+            <div class="text">${data.message}</div>
+        </div>
+    `;
+    messages.append(block);
+    messages.stop().animate({
+        scrollTop: messages[0].scrollHeight
+    },500);
 
+    ion.sound.play('message');
 }
 function deleteUser(id) {
     $('#online-users').find('.id-'+id).remove();
 }
-function receiver(message,onConnect,onJoinUser, onUserClose) {
+function receiver(message,onConnect,onJoinUser, onUserClose, onMessageAll) {
     switch(message.type){
         case 'connect':{
             onConnect();
@@ -32,6 +48,10 @@ function receiver(message,onConnect,onJoinUser, onUserClose) {
         }
         case 'user-close':{
             onUserClose();
+            break;
+        }
+        case 'message-all':{
+            onMessageAll();
             break;
         }
     }
