@@ -30,6 +30,8 @@ class Chat implements MessageComponentInterface {
 
         $this->authUsers[$conn->resourceId] = new ChatClient($conn, null);
 
+        $this->sendAllUsers($conn);
+
         echo "New connection! ({$conn->resourceId})\n";
     }
 
@@ -45,9 +47,13 @@ class Chat implements MessageComponentInterface {
                 $decryptJsonUser = Crypt::decrypt($message->value);
                 $user = json_decode($decryptJsonUser);
                 self::getUserByConnId($from->resourceId)->info = $user;
+                $message = json_encode($this->createMessageTemplate('user-join',[
+                    'firstname' => $user->name, 'secondname' => $user->secondName, 'id' => $user->id
+                ]));
+                // формируем сообщение всем клиентам при подключении нового клиента
 
                 foreach ($this->clients as $client)
-                    $client->send('hello от '.self::getUserByConnId($from->resourceId)->info->name);
+                    $client->send($message);
 
                 break;
             }
@@ -77,5 +83,25 @@ class Chat implements MessageComponentInterface {
     }
     private function getUserByConnId($id){
         return $this->authUsers[$id];
+    }
+    private function sendAllUsers(ConnectionInterface $conn){
+        $message = $this->createMessageTemplate('connect', []);
+        $jsonMessage = null;
+        var_dump($message);
+        foreach ($this->authUsers as $user) {
+            if($user->info !== null) {
+                var_dump($user->info);
+                array_push($message['value'],
+                    ['id' => $user->info->id, 'firstname' => $user->info->name, 'secondname' => $user->info->secondName]);
+            }
+            $jsonMessage = json_encode($message);
+            var_dump($jsonMessage);
+        }
+        $conn->send($jsonMessage);
+
+        return false;
+    }
+    protected function createMessageTemplate($type, $args){
+        return ['type' => $type, 'value' => $args];
     }
 }
