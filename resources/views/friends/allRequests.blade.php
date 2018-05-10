@@ -15,7 +15,7 @@
         <div class="card">
             <h5 class="card-header">{{ "$request->name $request->secondName" }}</h5>
             <div class="card-body">
-                <img src="{{ asset('images/no-photo.png') }}" style="width: 12%">
+                <img src="{{ asset("storage/avatars/$request->avatar") }}" style="width: 12%">
                 <a href="{{ route('friendsAcceptRequest',['user' => $request->id]) }}" class="card-link">Принять запрос</a>
                 <a href="{{ route('profileShow',['user' => $request->id]) }}" class="card-link">Перейти в профиль</a>
             </div>

@@ -7,23 +7,23 @@ function addUser(data) {
         <li class="user-online ui-menu-item id-${data.id}">
                 <div class="user-name">${data.firstname + ' ' + data.secondname}</div>
                 <ul class="user-options">
-                    <li class="ui-state-disabled">Меню</li>
-                    <li><a href="/profile/id${data}">Профиль</a></li>
-                    <li><a href="">Отправить сообщение</a></li>
+                    <li class=""><div class="ui-state-disabled">Меню</div></li>
+                    <li><div><a href="/profile/id${data.id}"><span class="ui-icon ui-icon-mail-closed"></span>Профиль</a></div></li>
+                    <li><div><a href="/chat/private/id${data.id}">Личное сообщение</a></div></li>
                 </ul>
             </li>
     `;
     usersMenu.append(block);
     usersMenu.menu('refresh');
 }
-function appendNewMessage(data) {
+function appendNewMessage(data, isJoin = false) {
     let messages = $('.messages');
     let block = `
         <div class="message">
             <div class="sender">
-                <p class="name">${data.sendername}</p>
+                <p class="name">${data.firstname}</p>
             </div>
-            <div class="text">${data.message}</div>
+            <div class="text">${ isJoin ? 'Вошёл в чат.' : data.message }</div>
         </div>
     `;
     messages.append(block);
@@ -32,6 +32,9 @@ function appendNewMessage(data) {
     },500);
 
     ion.sound.play('message');
+}
+function appendMessageAboutJoin() {
+    
 }
 function deleteUser(id) {
     $('#online-users').find('.id-'+id).remove();

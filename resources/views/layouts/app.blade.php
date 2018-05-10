@@ -22,17 +22,6 @@
 
 </head>
 <body>
-<!--
-    <header class="header" id="header">
-        <div class="row justify-content-between no-gutters">
-            <div class="col-md-4">
-                <p class="title">Social network</p>
-            </div>
-            <div class="col-md-2">
-                <p><a href="">Гость.</a></p>
-            </div>
-        </div>
-    </header>-->
     <div class="site-main">
         <div class="row no-gutters">
             <div class="col-md-2">
@@ -88,7 +77,8 @@
         </div>
     </div>
 
-    <script>
+
+<script>
         // Main js script
         $(document).ready(function () {
             ion.sound({
@@ -98,7 +88,7 @@
                     },
                 ],
                 volume: 0.5,
-                path: "<?php echo asset('audio').'/' ?>",
+                path: "{{ asset('audio').'/' }}",
                 preload: true
             });
 

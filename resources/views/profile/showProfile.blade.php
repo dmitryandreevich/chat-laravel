@@ -1,13 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <?php if(!isset($user)) die('not found') ?>
+    @php if(!isset($user)) die('not found') @endphp
     <div class="row">
         <div class="col-md-4">
-            <img src="{{ asset('images/no-photo.png') }}" alt="" class="card-img-top photo-profile">
-            <a href="" class="btn btn-primary">Изменить профиль</a>
-
-
+            <img src="{{ asset("storage/avatars/$user->avatar") }}" alt="" class="card-img-top photo-profile">
         </div>
         <div class="col-md-6 offset-md-2">
             <div class="card">

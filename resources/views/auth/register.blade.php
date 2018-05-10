@@ -149,7 +149,5 @@
         </div>
     </div>
 </div>
-<div class="card card-default">
-    <div class="card-body">A Basic Panel</div>
-</div>
+
 @endsection

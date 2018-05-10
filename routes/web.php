@@ -20,6 +20,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth','prefix' => '/profile'], function (){
     Route::get('/','ProfileController@index')->name('profile');
     Route::get('/id{user}','ProfileController@show')->name('profileShow');
+    Route::post('/changeAvatar/id','ProfileController@changeAvatar')->name('changeAvatar');
+
+    Route::get('/edit', 'Profile\UpdateController@index')->name('profileUpdatePage');
+    Route::put('/edit/update', 'Profile\UpdateController@update')->name('profileUpdate');
 });
 Route::group(['middleware' => 'auth','prefix' => 'friends'],function (){
     Route::get('/', 'FriendsController@index')->name('friends');

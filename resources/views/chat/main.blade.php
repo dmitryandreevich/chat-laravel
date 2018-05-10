@@ -29,13 +29,10 @@
 
         </ul>
     </div>
-
-</div>
-<div class="row">
-
-    <div class="col-md-12">
-        <h4 class="status">status</h4>
+    <div id="dialog" title="Произошла ошибка!" style="display: none">
+        <p>При соединении с сервером произошла ошибка. Попробуйте позже!</p>
     </div>
+
 </div>
 <script>
         $('#online-users').menu();
@@ -63,7 +60,9 @@
                         })
                     },
                     () =>{ // if new user join into chat
-                        addUser(message.value);
+                        addUser(message.value)
+                        appendNewMessage(message.value, true);
+
                     },
                     () =>{ // if user will disconected
                         console.log(message);
@@ -83,7 +82,9 @@
                 deleteUser(message.value);
             }
             socket.onerror = function(event){
-
+                $(
+                    "#dialog"
+                ).dialog();
             }
             $('.send-all').click( () => {
                 let msgText = $('.msg-all').val();

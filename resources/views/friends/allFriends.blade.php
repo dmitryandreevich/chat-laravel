@@ -17,7 +17,7 @@
         <div class="card">
             <h5 class="card-header">{{ "$friend->name $friend->secondName" }}</h5>
             <div class="card-body">
-                <img src="{{ asset('images/no-photo.png') }}" style="width: 12%">
+                <img src="{{ asset("storage/avatars/$friend->avatar") }}" style="width: 12%">
                 <a href="{{ route('profileShow',['user' => $friend->id]) }}" class="card-link">Написать сообщение</a>
                 <a href="{{ route('profileShow',['user' => $friend->id]) }}" class="card-link">Перейти в профиль</a>
                 <a href="{{ route('friendsCancelRequest',['user' => $friend->id]) }}" class="card-link">Удалить из друзей</a>

@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
     @foreach($users as $user)
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ asset('images/no-photo.png') }}" alt="Card image cap">
+                <img class="card-img-top" src="{{ asset("storage/avatars/$user->avatar") }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{ "$user->name $user->secondName" }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ "$user->country/$user->city" }}</h6>

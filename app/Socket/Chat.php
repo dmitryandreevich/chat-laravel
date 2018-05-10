@@ -62,8 +62,8 @@ class Chat implements MessageComponentInterface {
             case 'message-all':{
                 $sender = $this->getUserByConnId($from->resourceId);
                 $response = $this->createMessageTemplate('message-all',
-                    ['senderid' => $sender->info->id, 'sendername' => $sender->info->name,
-                        'sendersecondname' => $sender->info->secondName, 'message' => $message->value]);
+                    ['id' => $sender->info->id, 'firstname' => $sender->info->name,
+                        'secondname' => $sender->info->secondName, 'message' => $message->value]);
                 $this->sendMessageAll(json_encode($response)); // отправляем всем пользователям сформированный ответ
             }
         }

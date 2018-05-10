@@ -1,14 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+    <?php $user = Auth::user(); ?>
     <div class="row">
         <div class="col-md-4">
-            <img src="images/no-photo.png" alt="" class="card-img-top photo-profile">
-            <a href="" class="btn btn-primary">Изменить профиль</a>
+            <img src="{{ asset("storage/avatars/$user->avatar") }}" alt="" class="card-img-top photo-profile">
+            <form action="{{ route('changeAvatar') }}" enctype="multipart/form-data" method="post">
+                {{ csrf_field() }}
+
+                <input type="file" name="avatar">
+                <input type="submit" name="changeAvatar">
+            </form>
+            <a href="{{ route('profileUpdatePage') }}" class="btn btn-primary">Изменить профиль</a>
         </div>
         <div class="col-md-6 offset-md-2">
             <div class="card">
-                <?php $user = Auth::user(); ?>
+
 
                 <div class="card-header">{{ "{$user->name} {$user->secondName} {$user->middleName}"}}</div>
                 <div class="card-body">
