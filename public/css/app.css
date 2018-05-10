@@ -54,7 +54,6 @@ header a,p,span{
 }
 
 .left-sidebar nav li:hover, .left-sidebar nav a{
-
     color: white;
 }
 footer{
@@ -65,10 +64,43 @@ main{
     min-height: 768px;
     background-color: #fafafa;
 }
-.photo-profile{
-    width: 20%;
+.profile-block{
+    padding: 10px 20px;
+    border: 1px solid #ffffff;
+    background-color: white;
+    border-radius: 6px;
+    display: block;
+    box-shadow: 1px 1px 10px #dfdfdf;
+    margin: 15px 0;
 }
+.profile-block-content .friend-photo{
+    max-width: 68px;
+    max-height: 68px;
+}
+.profile-block-content .friend-link{
+    display: block;
+}
+.photo-profile{
+    max-height: 250px;
+    display: block;
+    margin: 0 auto;
 
+}.feed .profile-block-header{
+    display: flex;
+
+ }
+.feed .profile-block-header .avatar{
+    align-self: center;
+    max-width: 68px;
+    max-height: 68px;
+}
+.feed .profile-block-header .post-author{
+    margin-bottom: 0;
+}
+.feed .profile-block-header .post-date{
+    color: #bfbfbf;
+    font-size: 14px;
+}
 .messages,.messages-private{
     height: 300px;
     overflow-y: scroll;
@@ -85,12 +117,10 @@ main{
 .friends-navigation ul li{
     list-style: none;
 }
-
 div{
     padding: 0;
     margin: 0;
 }
-
 .no-gutter > [class*='col-'] {
      padding-right:0;
      padding-left:0;

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateController extends Controller
 {
@@ -31,5 +33,18 @@ class UpdateController extends Controller
             'city' => $data['city'],
             'sex' => $data['sex']]);
         return redirect( route('profile') );
+    }
+    public function updateAvatar(Request $request){
+        if($request->has('avatar')){
+            $file = $request->file('avatar');
+            $fileBytes = file_get_contents($file);
+            $fileName = time() . '_' . Auth::user()->id . '_' . $file->getClientOriginalName();
+            Storage::disk('local')->put("public/avatars/$fileName", $fileBytes);
+            $user = User::find(Auth::user()->id);
+            $user->avatar = $fileName;
+            $user->save();
+
+            return redirect( route('profileUpdatePage') );
+        }
     }
 }
