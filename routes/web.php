@@ -31,6 +31,9 @@ Route::group(['middleware' => 'auth','prefix' => 'friends'],function (){
     Route::get('/delete/id{user}','FriendsController@cancelRequest')->name('friendsCancelRequest');
     Route::get('/accept/id{user}','FriendsController@acceptRequest')->name('friendsAcceptRequest');
 });
+Route::resource('publications','PublicationController',[
+    'except' => ['create']
+]);
 
 Route::get('/people','PeopleController@index')->name('people')->middleware('auth');
 

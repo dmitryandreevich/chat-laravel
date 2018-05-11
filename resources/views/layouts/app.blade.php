@@ -29,10 +29,12 @@
                     <nav>
                         <ul>
                             @guest
+                                <a href="{{ route('people') }}"> <li><i class="fas fa-users"></i><span class="text-link">Люди</span></li></a>
                                 <a href="{{ route('login') }}"> <li><i class="fas fa-sign-out-alt"></i><span class="text-link">Вход</span></li></a>
                                 <a href="{{ route('register') }}"><li><i class="fas fa-user-plus"></i><span class="text-link">Регистрация</span></li></a>
                             @else
                                 <a href="{{ route('profile') }}"><li><i class="far fa-user-circle"></i><span class="text-link">Профиль</span></li></a>
+                                <a href="{{ route('publications.index') }}"> <li><i class="fas fa-newspaper"></i><span class="text-link">Лента</span></li></a>
                                 <a href="{{ route('people') }}"> <li><i class="fas fa-users"></i><span class="text-link">Люди</span></li></a>
                                 <li class="dropdown-link"><a href="{{ 'friends' }}">
                                         <span class="text-link"><i class="fas fa-user-friends"></i>
@@ -46,7 +48,6 @@
 
                                 <a href="{{ route('sharedChat') }}"><li><i class="fas fa-comments"></i><span class="text-link">Общий чат</span></li></a>
                                 <a  href="{{ route('logout') }}"><li><i class="fas fa-sign-out-alt"></i><span class="text-link">Выйти</span></li></a>
-
                             @endguest
                         </ul>
                     </nav>

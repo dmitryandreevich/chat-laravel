@@ -73,7 +73,7 @@ class FriendsController extends Controller
         return Friend::whereRaw('id1 = ?',[$userId])->count();
     }
     // получить всех друзей юзера
-    private function getAllFriends($userId){
+    public static function getAllFriends($userId){
         $friendsIds = Friend::whereRaw('id1 = ?',[$userId])->get();
         $friends = array();
         foreach ($friendsIds as $friend){

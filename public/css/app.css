@@ -77,6 +77,9 @@ main{
     max-width: 68px;
     max-height: 68px;
 }
+.profile-block-content .friend .name{
+    display: block;
+}
 .profile-block-content .friend-link{
     display: block;
 }
@@ -94,12 +97,27 @@ main{
     max-width: 68px;
     max-height: 68px;
 }
+.feed .profile-block-header .header-info{
+    margin-left: 15px;
+}
 .feed .profile-block-header .post-author{
     margin-bottom: 0;
 }
 .feed .profile-block-header .post-date{
     color: #bfbfbf;
     font-size: 14px;
+}
+.feed .new-post #post-text{
+    width: 100%;
+    height: 26px;
+    background-color: rgba(255,255,255,0.2);
+    border: 1px solid #e4e4e4;
+    resize: none;
+    overflow: hidden;
+}
+.feed .new-post .post-send{
+    display: none;
+    opacity: 0;
 }
 .messages,.messages-private{
     height: 300px;
@@ -111,12 +129,7 @@ main{
     margin: 0;
 }
 
-.friends-navigation ul{
-    padding: 0 5px;
-}
-.friends-navigation ul li{
-    list-style: none;
-}
+
 div{
     padding: 0;
     margin: 0;
