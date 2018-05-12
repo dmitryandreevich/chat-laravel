@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\FriendsController;
+use App\User;
 use Closure;
 
 class CheckPrivateChatRules
@@ -15,7 +17,10 @@ class CheckPrivateChatRules
      */
     public function handle($request, Closure $next)
     {
-        echo 'hello world';
+        $companionId = intval($request->route()->parameter('id'));
+        $exist = User::findOrFail($companionId);
+        if(!FriendsController::isFriend($companionId))
+            return redirect()->back()->withErrors(['error' => 'Данный пользователь не является вашим другом']);
         return $next($request);
     }
 }

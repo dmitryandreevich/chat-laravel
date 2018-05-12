@@ -10,7 +10,6 @@
 
 
 @section('content')
-
     <div class="row feed">
 
         <div class="col-md-8 offset-md-2">
