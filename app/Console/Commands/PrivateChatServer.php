@@ -2,28 +2,27 @@
 
 namespace App\Console\Commands;
 
-use App\Socket\Chat;
 use App\Socket\PrivateChat;
 use Illuminate\Console\Command;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 
-class ChatServer extends Command
+class PrivateChatServer extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'chat:serve';
+    protected $signature = 'chat:private';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Start chat server';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -42,18 +41,14 @@ class ChatServer extends Command
      */
     public function handle()
     {
-        $this->info('Start server');
-        $server = IoServer::factory(
+        $privateChatServer = IoServer::factory(
             new HttpServer(
                 new WsServer(
-                    new Chat()
+                    new PrivateChat()
                 )
             ),
-            8080
+            8081
         );
-
-        $server->run();
-
-
+        $privateChatServer->run();
     }
 }
