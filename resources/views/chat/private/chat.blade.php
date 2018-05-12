@@ -10,6 +10,10 @@
 
 @section('content')
     <div class="row">
+        <?php
+            var_dump($user);
+            var_dump($companion);
+        ?>
         <div class="col-md-12">
             <div class="private-chat">
                 <div class="profile-block">
@@ -32,8 +36,9 @@
 
             socket.onopen = function(){
                 <?php
-                    $params = Route::current()->parameters();
-                    var_dump($params);
+                    $jsonUser = json_encode(\Illuminate\Support\Facades\Auth::user());
+                    $encryptedJsonUser = \Illuminate\Support\Facades\Crypt::encrypt($jsonUser);
+                    $companionId = Route::current()->parameters()['id']; // id собеседника
                 ?>
 
                 socket.send('heey');
