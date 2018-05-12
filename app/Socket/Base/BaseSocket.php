@@ -14,6 +14,7 @@ use Ratchet\MessageComponentInterface;
 
 class BaseSocket implements MessageComponentInterface
 {
+    protected $clients;
     /**
      * When a new connection is opened it will be passed to this method
      * @param  ConnectionInterface $conn The socket/connection that just connected to your application
@@ -55,5 +56,12 @@ class BaseSocket implements MessageComponentInterface
     function onMessage(ConnectionInterface $from, $msg)
     {
         // TODO: Implement onMessage() method.
+    }
+    function sendMessageAll($message){
+        foreach ($this->clients as $client)
+            $client->send($message);
+    }
+    function createMessageTemplate($type, $args){
+        return ['type' => $type, 'value' => $args];
     }
 }

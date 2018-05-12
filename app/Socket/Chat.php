@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Crypt;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
-class Chat implements MessageComponentInterface {
-    protected $clients;
+class Chat extends BaseSocket{
     protected $authUsers;
     public function __construct() {
         $this->clients = new \SplObjectStorage;
@@ -52,8 +51,7 @@ class Chat implements MessageComponentInterface {
                 ]));
                 // формируем сообщение всем клиентам при подключении нового клиента
 
-                foreach ($this->clients as $client)
-                    $client->send($message);
+                $this->sendMessageAll($message);
 
                 break;
             }
@@ -116,11 +114,5 @@ class Chat implements MessageComponentInterface {
 
         return false;
     }
-    private function sendMessageAll($message){
-        foreach ($this->clients as $client)
-            $client->send($message);
-    }
-    protected function createMessageTemplate($type, $args){
-        return ['type' => $type, 'value' => $args];
-    }
+
 }
