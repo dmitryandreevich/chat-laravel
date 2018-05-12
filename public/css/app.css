@@ -121,7 +121,7 @@ main{
 }
 .messages,.messages-private{
     height: 300px;
-    overflow-y: scroll;
+    overflow-y:scroll;
 }
 .message .name{
     font-weight: bold;

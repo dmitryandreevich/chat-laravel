@@ -12,22 +12,31 @@
 
 <div class="row">
     <div class="col-md-8">
-        <h3>Общий чат</h3>
-        <div class="messages">
+        <div class="profile-block">
+            <div class="profile-block-header"><h4>Общий чат</h4></div>
+            <div class="profile-block-content">
+                <div class="messages">
 
+                </div>
+                <div class="form-group">
+                    <input type="text" name="" placeholder="Введите сообщение" class="form-control msg-all">
+                </div>
+
+                <button class="btn btn-primary send-all">Отправить</button>
+            </div>
         </div>
-        <div class="form-group">
-            <input type="text" name="" placeholder="Введите сообщение" class="form-control msg-all">
-        </div>
-        
-        
-        <button class="btn btn-primary send-all">Отправить</button>
+
     </div>
     <div class="col-md-4">
-        <p class="online">Онлайн: 0</p>
-        <ul id="online-users">
+        <div class="profile-block">
+            <div class="profile-block-header"><h4>Пользователи</h4></div>
+            <div class="profile-block-content">
+                <ul id="online-users">
 
-        </ul>
+                </ul>
+            </div>
+        </div>
+
     </div>
     <div id="dialog" title="Произошла ошибка!" style="display: none">
         <p>При соединении с сервером произошла ошибка. Попробуйте позже!</p>
@@ -86,12 +95,13 @@
                     "#dialog"
                 ).dialog();
             }
+            $(document).keypress(function(e) {
+                if(e.which == 13) {
+                    sendMessageAll(socket);
+                }
+            });
             $('.send-all').click( () => {
-                let msgText = $('.msg-all').val();
-                let message = {type: 'message-all', value: msgText};
-                socket.send(JSON.stringify(message));
-
-                $('.msg-all').val('');
+                sendMessageAll(socket);
             });
         });
 

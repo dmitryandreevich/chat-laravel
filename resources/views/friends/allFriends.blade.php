@@ -14,9 +14,9 @@
     <h6>Все друзья</h6>
 
     @foreach($friends as $friend)
-        <div class="card">
-            <h5 class="card-header">{{ "$friend->name $friend->secondName" }}</h5>
-            <div class="card-body">
+        <div class="profile-block">
+            <h5 class="profile-block-header">{{ "$friend->name $friend->secondName" }}</h5>
+            <div class="profile-block-content">
                 <img src="{{ asset("storage/avatars/$friend->avatar") }}" style="width: 12%">
                 <a href="{{ route('profileShow',['user' => $friend->id]) }}" class="card-link">Написать сообщение</a>
                 <a href="{{ route('profileShow',['user' => $friend->id]) }}" class="card-link">Перейти в профиль</a>

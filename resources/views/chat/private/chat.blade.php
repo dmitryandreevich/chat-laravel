@@ -27,9 +27,7 @@
 
     <script>
         $(document).ready(function(){
-
             var socket = new WebSocket("ws://localhost:8081");
-
             socket.onopen = function(){
                 <?php
                     $userId = $user->id;

@@ -12,9 +12,9 @@
 @section('friends-content')
     <h6>Все подписчики</h6>
     @foreach($requests as $request)
-        <div class="card">
-            <h5 class="card-header">{{ "$request->name $request->secondName" }}</h5>
-            <div class="card-body">
+        <div class="profile-block">
+            <h5 class="profile-block-header">{{ "$request->name $request->secondName" }}</h5>
+            <div class="profile-block-content">
                 <img src="{{ asset("storage/avatars/$request->avatar") }}" style="width: 12%">
                 <a href="{{ route('friendsAcceptRequest',['user' => $request->id]) }}" class="card-link">Принять запрос</a>
                 <a href="{{ route('profileShow',['user' => $request->id]) }}" class="card-link">Перейти в профиль</a>

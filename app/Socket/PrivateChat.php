@@ -47,7 +47,7 @@ class PrivateChat extends BaseSocket
                 $companion = User::find($value->companionId);
 
                 $chatClient = new ChatClient($from, $user);
-                $room = $this->existRoomForCompanion($user->id);
+                $room = $this->findRoomForCompanion($user->id);
                 // если же нет комнат для него, создаём новую и впускаем его туда
                 // а так же говорим, что в комнате ждут ещё юзера с id n
                 $this->chatClients[$from->resourceId] = $chatClient;
@@ -56,13 +56,9 @@ class PrivateChat extends BaseSocket
                 {
                     $r = new ChatRoom( $chatClient, $companion->id);
                     array_push($this->rooms, $r);
-                    echo 'create room';
                 }
                 else// если пользователь который присоединяется, имеет уже зарезирвированную комнату для него
-                {
                     $room->join($chatClient);
-                    echo 'join in room';
-                }
 
                 break;
             }
@@ -75,11 +71,11 @@ class PrivateChat extends BaseSocket
         $chatClient = $this->chatClients[$conn->resourceId];
         $room = $this->findRoomWithClient($chatClient); // получаем комнату, если он есть там
         if(is_object($room)){
-            echo 'exit room';
+            echo 'Exit room';
             $room->exit($chatClient);
             if($room->isEmpty()) {
                 unset($this->rooms[array_search($room, $this->rooms)]);
-                echo 'room is empty and delete';
+                echo 'Room is empty and was deleted';
             }
         }
         unset($this->chatClients[$conn->resourceId]);
@@ -104,7 +100,7 @@ class PrivateChat extends BaseSocket
     }
     // есть ли уже зарегистрированная комната для пользователя с id n
     // то вернём её
-    private function existRoomForCompanion($id){
+    private function findRoomForCompanion($id){
         foreach ($this->rooms as $key => $room){
             if($room->isCompanion($id))
                 return $room;

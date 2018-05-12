@@ -33,8 +33,13 @@ function appendNewMessage(data, isJoin = false) {
 
     ion.sound.play('message');
 }
-function appendMessageAboutJoin() {
-    
+function sendMessageAll(ws) {
+    let msgText = $('.msg-all').val();
+    let message = {type: 'message-all', value: msgText};
+    if(msgText != ""){
+        ws.send(JSON.stringify(message));
+        $('.msg-all').val('');
+    }
 }
 function deleteUser(id) {
     $('#online-users').find('.id-'+id).remove();
