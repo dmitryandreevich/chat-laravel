@@ -29,6 +29,15 @@ class PublicationController extends Controller
             $publication->author = User::findOrFail($publication->author_id);
         return view('publications', compact('friendsPublications'));
     }
+    public function giveLike(Request $request){
+
+        $pId = $request->pId;
+        $publication = Publication::where('id', $pId)->first();
+        $likes = $publication->likes;
+        $publication->likes = $likes + 1;
+        $publication->save();
+        return $likes + 1;
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -31,11 +31,17 @@
                         <div class="post-message">
                             {{ $publication->text }}
                         </div>
+                        <hr>
+                        <div class="post-options">
+                            <button class="btn-like" name="btnLike" onclick="giveLike(this)" id="{{ $publication->id }}"><i class="fas fa-thumbs-up count">{{ $publication->likes }}</i></button>
+                        </div>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
+    <script>
 
+    </script>
 
 @endsection

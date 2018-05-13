@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth','prefix' => 'friends'],function (){
 Route::resource('publications','PublicationController',[
     'except' => ['create']
 ]);
+Route::post('publications/givelike','PublicationController@giveLike')->name('publications.givelike');
 
 Route::get('/people','PeopleController@index')->name('people')->middleware('auth');
 

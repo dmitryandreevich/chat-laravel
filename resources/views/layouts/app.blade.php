@@ -19,7 +19,7 @@
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/ChatClient.js') }}"></script>
     <script src="{{ asset('js/ion.sound.min.js') }}"></script>
-
+    <script src="{{ asset('js/main.js') }}"></script>
 </head>
 <body>
     <div class="site-main">

@@ -89,8 +89,13 @@
                             <div class="post-message">
                                 {{ $publication->text }}
                             </div>
+                            <hr>
+                            <div class="post-options">
+                                <button class="btn-like" id="{{ $publication->id }}" name="btnLike" onclick="giveLike(this)"><i class="fas fa-thumbs-up count">{{ $publication->likes }}</i></button>
+                            </div>
                         </div>
                     </div>
+
                 @endforeach
 
             </div>
@@ -98,7 +103,7 @@
     </div>
     <script>
         $(document).ready(function () {
-           let postArea = $('#post-text');
+            let postArea = $('#post-text');
             let btnPostSend = $('.post-send');
 
             postArea.keyup(() => {
