@@ -10,7 +10,7 @@
 
 
 @section('friends-content')
-    <h6>Все подписчики</h6>
+    <h6>Все подписчики <span class="badge badge-light">{{ count($requests) }}</span></h6>
     @foreach($requests as $request)
         <div class="profile-block">
             <h5 class="profile-block-header">{{ "$request->name $request->secondName" }}</h5>

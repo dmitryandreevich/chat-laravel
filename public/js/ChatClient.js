@@ -17,14 +17,13 @@ function addUser(data) {
     usersMenu.menu('refresh');
 }
 function appendNewMessage(data, isJoin = false) {
-    data = typeof data == 'string' ? JSON.parse(data) : data;
     let messages = $('.messages');
     let block = `
         <div class="message">
             <div class="sender">
                 <p class="name">${data.firstname}</p>
             </div>
-            <div class="text">${ isJoin ? 'Вошёл в чат.' : data.text }</div>
+            <div class="text form-control">${ isJoin ? 'Вошёл в чат.' : data.text }</div>
         </div>
     `;
     messages.append(block);

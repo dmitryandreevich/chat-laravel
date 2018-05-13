@@ -13,16 +13,7 @@ use Illuminate\Support\Facades\Auth;
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="navbar navbar-dark ">
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-                </form>
-            </nav>
-        </div>
-    </div>
+
     <div class="row">
 
     @foreach($users as $user)
@@ -41,11 +32,10 @@ use Illuminate\Support\Facades\Auth;
                             if(!$isFriend){
                                 $isSub = FriendsController::isSub($user->id);
                                 $isTaker = FriendsController::isTaker($user->id);
-                                var_dump($isSub);
-                                var_dump($isTaker);
+                                //var_dump($isSub);
+                                //var_dump($isTaker);
                             }
                         }
-
                     @endphp
 
                     @if(Auth::user()->id !== $user->id)
@@ -58,7 +48,6 @@ use Illuminate\Support\Facades\Auth;
                                 <a href="{{ route('friendsCancelRequest',['user' => $user->id]) }}" class="card-link">Отменить запрос</a>
                             @else
                                 <a href="{{ route('friendsSendRequest',['user' => $user->id]) }}" class="card-link">Отправить запрос</a>
-
                             @endif
                         @endif
 

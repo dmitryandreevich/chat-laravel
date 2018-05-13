@@ -11,7 +11,7 @@
 
 
 @section('friends-content')
-    <h6>Все друзья</h6>
+    <h6>Все друзья <span class="badge badge-light">{{ count($friends) }}</span></h6>
 
     @foreach($friends as $friend)
         <div class="profile-block">

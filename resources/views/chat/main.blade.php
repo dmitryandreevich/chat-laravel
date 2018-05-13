@@ -22,7 +22,7 @@
                     <input type="text" name="" placeholder="Введите сообщение" class="form-control msg-all">
                 </div>
 
-                <button class="btn btn-primary send-all">Отправить</button>
+                <button class="btn btn-outline-primary send-all w-100">Отправить</button>
             </div>
         </div>
 
