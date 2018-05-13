@@ -16,7 +16,7 @@ class ProfileController extends Controller
     public function index(){
         $user = Auth::user();
         $friends = FriendsController::getAllFriends($user->id);
-        $publications = Publication::getAll();
+        $publications = Publication::getAll($user->id);
 
         return view('profile.profile',[
             'user' => $user,
@@ -26,10 +26,12 @@ class ProfileController extends Controller
     }
 
     public function show(User $user){
-        $publications = Publication::getAll();
+        $publications = Publication::getAll($user->id);
+        $friends = FriendsController::getAllFriends($user->id);
         return view('profile.showProfile',[
             'user' => $user,
-            'publications' => $publications
+            'publications' => $publications,
+            'friends' => $friends
         ]);
     }
 }

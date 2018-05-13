@@ -9,7 +9,7 @@ function addUser(data) {
                 <ul class="user-options">
                     <li class=""><div class="ui-state-disabled">Меню</div></li>
                     <li><div><a href="/profile/id${data.id}"><span class="ui-icon ui-icon-mail-closed"></span>Профиль</a></div></li>
-                    <li><div><a href="/chat/private/id${data.id}">Личное сообщение</a></div></li>
+                    <li><div><a href="/pm/id${data.id}">Личное сообщение</a></div></li>
                 </ul>
             </li>
     `;

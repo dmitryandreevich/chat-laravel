@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-4 offset-md-0">
             <div class="profile-block">
-                <img src="{{ asset("storage/avatars/$user->avatar") }}" alt="" class="photo-profile">
+                <img src="{{ asset("storage/avatars/$user->avatar") }}" alt="" class="card-img-top">
 
                 <a href="{{ route('profileUpdatePage') }}" class="btn btn-outline-primary profile-edit" style="width: 100%">Изменить профиль</a>
 
@@ -32,7 +32,7 @@
             <div class="profile-block friends-block">
                 <div class="profile-block-header">
                     <div class="row justify-content-between">
-                        <div class="col-md-4"><p>Друзья 1</p></div>
+                        <div class="col-md-4"><p>Друзья <span class="badge badge-light"></span>{{ count($friends) }}</p></div>
                         <div class="col-md-5"><a href="" class="card-link">Показать всех</a></div>
                     </div>
                 </div>
