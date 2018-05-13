@@ -17,13 +17,14 @@ function addUser(data) {
     usersMenu.menu('refresh');
 }
 function appendNewMessage(data, isJoin = false) {
+    data = typeof data == 'string' ? JSON.parse(data) : data;
     let messages = $('.messages');
     let block = `
         <div class="message">
             <div class="sender">
                 <p class="name">${data.firstname}</p>
             </div>
-            <div class="text">${ isJoin ? 'Вошёл в чат.' : data.message }</div>
+            <div class="text">${ isJoin ? 'Вошёл в чат.' : data.text }</div>
         </div>
     `;
     messages.append(block);
@@ -32,6 +33,9 @@ function appendNewMessage(data, isJoin = false) {
     },500);
 
     ion.sound.play('message');
+}
+function resetScrollMessages() {
+    $('.messages')[0].scrollTop = $('.messages')[0].scrollHeight;
 }
 function sendMessageAll(ws) {
     let msgText = $('.msg-all').val();

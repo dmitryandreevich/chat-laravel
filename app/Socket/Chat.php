@@ -61,7 +61,7 @@ class Chat extends BaseSocket{
                 $sender = $this->getUserByConnId($from->resourceId);
                 $response = $this->createMessageTemplate('message-all',
                     ['id' => $sender->info->id, 'firstname' => $sender->info->name,
-                        'secondname' => $sender->info->secondName, 'message' => $message->value]);
+                        'secondname' => $sender->info->secondName, 'text' => $message->value]);
                 $this->sendMessageAll(json_encode($response)); // отправляем всем пользователям сформированный ответ
             }
         }

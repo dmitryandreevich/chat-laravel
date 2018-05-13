@@ -13,12 +13,10 @@ class ChatRoom
 {
     protected $clients;
     protected $companionId;
-    public function __construct(ChatClient $client, $companionId)
-    {
+    public function __construct(ChatClient $client, $companionId){
         $this->clients = [$client];
         $this->companionId = $companionId;
     }
-
     public function join(ChatClient $client){
         return array_push($this->clients, $client);
     }
@@ -26,9 +24,7 @@ class ChatRoom
         $id = array_search($client, $this->clients);
         unset($this->clients[$id]);
     }
-
-    public function isCompanion($companionId)
-    {
+    public function isCompanion($companionId){
         return $this->companionId === $companionId;
     }
     public function isEmpty(){

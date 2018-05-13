@@ -1,10 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Dmitry Andreevich
- * Date: 20.04.2018
- * Time: 20:01
- */
+* Created by PhpStorm.
+* User: Dmitry Andreevich
+* Date: 20.04.2018
+* Time: 20:01
+*/
 ?>
 @extends('friends.layout')
 

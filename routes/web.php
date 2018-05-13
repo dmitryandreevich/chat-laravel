@@ -38,7 +38,7 @@ Route::resource('publications','PublicationController',[
 Route::get('/people','PeopleController@index')->name('people')->middleware('auth');
 
 Route::get('/chat/shared','ChatController@index')->name('sharedChat')->middleware('auth');
-Route::get('/pm/id{id}','PrivateChatController@show')->name('privateChat')->middleware('privateChat');
+Route::get('/pm/id{id}','PrivateChatController@show')->name('private.show')->middleware('privateChat');
     // написать свой middleware для проверки в друзьях ли он или нет
 
 Route::get('/', function (){

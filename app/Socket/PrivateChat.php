@@ -9,6 +9,7 @@
 namespace App\Socket;
 
 
+use App\MessageHistory;
 use App\Socket\Base\BaseSocket;
 use App\Socket\Base\ChatClient;
 use App\Socket\Base\ChatRoom;
@@ -56,9 +57,31 @@ class PrivateChat extends BaseSocket
                 {
                     $r = new ChatRoom( $chatClient, $companion->id);
                     array_push($this->rooms, $r);
+                    echo 'Server was create new room! ';
                 }
-                else// если пользователь который присоединяется, имеет уже зарезирвированную комнату для него
+                else {// если пользователь который присоединяется, имеет уже зарезирвированную комнату для него
                     $room->join($chatClient);
+                    echo 'Client was join in room';
+                }
+                break;
+            }
+            case 'message':{
+                $value = $message->value;
+                $senderId = Crypt::decrypt($value->senderId);
+                $companionId = Crypt::decrypt($value->companionId);
+
+                $text = $value->text;
+                $room = $this->findRoomWithClient($this->chatClients[$from->resourceId]);
+                if($room !== false) {
+                    $sender = $this->chatClients[$from->resourceId];
+                    $response = $this->createMessageTemplate('message',['id' => $sender->info->id, 'firstname' => $sender->info->name,
+                        'secondname' => $sender->info->secondName, 'text' => $text,'avatar' => $sender->info->avatar]);
+                    foreach ($room->getClients() as $client) {
+                        $client->conn->send(json_encode($response));
+                    }
+                }
+
+                MessageHistory::create(['sender' => $senderId, 'receiver' => $companionId, 'text' => $text]);
 
                 break;
             }
