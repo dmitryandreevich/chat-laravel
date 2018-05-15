@@ -22,7 +22,9 @@ class UpdateController extends Controller
             'aboutMe' => 'required|string|min:5',
             'email' => 'required|email|min:5'
         ]);
+
         $data = $request->input();
+
         Auth::user()->update(['name' => $data['name'],
             'secondName' => $data['secondName'],
             'middleName' => $data['middleName'],
@@ -32,6 +34,7 @@ class UpdateController extends Controller
             'country' => $data['country'],
             'city' => $data['city'],
             'sex' => $data['sex']]);
+
         return redirect( route('profile') );
     }
     public function updateAvatar(Request $request){

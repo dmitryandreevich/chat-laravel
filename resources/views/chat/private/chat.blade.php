@@ -43,13 +43,14 @@
                 $userId = $user->id;
                 $companionId = $companion->id;
             @endphp
+
             var socket = new WebSocket("ws://localhost:8081");
             socket.onopen = function(){
                 <?php
                     $data = json_encode(['userId' => $userId, 'companionId' => $companionId]);
                     $encryptedData = \Illuminate\Support\Facades\Crypt::encrypt($data);
                 ?>
-                socket.send(JSON.stringify({type:'connect', value: "{{ $encryptedData }}"}));
+                socket.send( JSON.stringify({type:'connect', value: "{{ $encryptedData }}"}) );
             };
             socket.onmessage = function(event){
                 let message = JSON.parse(event.data);
@@ -69,7 +70,7 @@
                     let request = {type: 'message', value:{'senderId': "{{ \Illuminate\Support\Facades\Crypt::encrypt($userId) }}",
                             'companionId': "{{ \Illuminate\Support\Facades\Crypt::encrypt($companionId) }}",
                             text: text}};
-                    socket.send(JSON.stringify(request));
+                    socket.send( JSON.stringify(request) );
                     $('.message-private').val("");
                 }
             }

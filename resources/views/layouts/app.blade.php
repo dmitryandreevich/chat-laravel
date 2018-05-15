@@ -36,9 +36,10 @@
                                 <a href="{{ route('profile') }}"><li><i class="far fa-user-circle"></i><span class="text-link">Профиль</span></li></a>
                                 <a href="{{ route('publications.index') }}"> <li><i class="fas fa-newspaper"></i><span class="text-link">Лента</span></li></a>
                                 <a href="{{ route('people') }}"> <li><i class="fas fa-users"></i><span class="text-link">Люди</span></li></a>
-                                <li class="dropdown-link"><a href="{{ 'friends' }}">
+                                <li class="dropdown-link">
+                                    <a href="{{ route('friends') }}">
                                         <span class="text-link"><i class="fas fa-user-friends"></i>
-                                            Друзья <span class="dropdown-toggle"></span> </span></a>
+                                            Друзья <span class="dropdown-toggle"></span> </span>
                                     </a>
                                     <ul class="drop-list">
                                         <a href="{{ route('friends') }}"> <li>Все</li></a>
@@ -46,7 +47,7 @@
                                     </ul>
                                 </li>
 
-                                <a href="{{ route('sharedChat') }}"><li><i class="fas fa-comments"></i><span class="text-link">Общий чат</span></li></a>
+                                <a href="{{ route('chat.index') }}"><li><i class="fas fa-comments"></i><span class="text-link">Общий чат</span></li></a>
                                 <a  href="{{ route('logout') }}"><li><i class="fas fa-sign-out-alt"></i><span class="text-link">Выйти</span></li></a>
                             @endguest
                         </ul>

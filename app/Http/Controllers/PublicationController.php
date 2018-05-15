@@ -19,23 +19,27 @@ class PublicationController extends Controller
     {
         $friendsIds = array(Auth::user()->id);
         $friends = FriendsController::getAllFriends(Auth::user()->id);
+
         // формируем массив идентификаторов друзей юзера
         foreach ($friends as $friend)
             array_push($friendsIds, $friend->id);
+
         // забираем все публикации друзей
         $friendsPublications = Publication::whereIn('author_id',$friendsIds)->orderBy('created_at','desc')->get();
+
         // добавляем в каждую публикацию, коллекцию автора
         foreach ($friendsPublications as $publication)
             $publication->author = User::findOrFail($publication->author_id);
+
         return view('publications', compact('friendsPublications'));
     }
     public function giveLike(Request $request){
-
         $pId = $request->pId;
         $publication = Publication::where('id', $pId)->first();
         $likes = $publication->likes;
         $publication->likes = $likes + 1;
         $publication->save();
+
         return $likes + 1;
     }
 
@@ -59,6 +63,7 @@ class PublicationController extends Controller
     {
         $request->validate(['postText' => 'required|string|min:1']);
         Publication::create(['author_id' => Auth::user()->id, 'text' => $request->input('postText')]);
+
         return redirect( route('profile') );
     }
 

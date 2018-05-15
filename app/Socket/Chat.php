@@ -26,9 +26,7 @@ class Chat extends BaseSocket{
     public function onOpen(ConnectionInterface $conn) {
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
-
         $this->authUsers[$conn->resourceId] = new ChatClient($conn, null);
-
         $this->sendAllUsers($conn);
 
         echo "New connection! ({$conn->resourceId})\n";
@@ -36,8 +34,6 @@ class Chat extends BaseSocket{
 
     public function onMessage(ConnectionInterface $from, $msg) {
         $numRecv = count($this->clients) - 1; // count current users online
-
-
         $message = json_decode($msg);
 
         switch ($message->type){
@@ -46,13 +42,12 @@ class Chat extends BaseSocket{
                 $decryptJsonUser = Crypt::decrypt($message->value);
                 $user = json_decode($decryptJsonUser);
                 self::getUserByConnId($from->resourceId)->info = $user;
-                $message = json_encode($this->createMessageTemplate('user-join',[
+                $message = json_encode( $this->createMessageTemplate('user-join',[
                     'firstname' => $user->name, 'secondname' => $user->secondName, 'id' => $user->id
-                ]));
+                ]) );
                 // формируем сообщение всем клиентам при подключении нового клиента
 
                 $this->sendMessageAll($message);
-
                 break;
             }
             // если пришёл запрос на отправку сообщения всем пользователям
@@ -62,7 +57,9 @@ class Chat extends BaseSocket{
                 $response = $this->createMessageTemplate('message-all',
                     ['id' => $sender->info->id, 'firstname' => $sender->info->name,
                         'secondname' => $sender->info->secondName, 'text' => $message->value]);
-                $this->sendMessageAll(json_encode($response)); // отправляем всем пользователям сформированный ответ
+
+                $this->sendMessageAll( json_encode($response) ); // отправляем всем пользователям сформированный ответ
+                break;
             }
         }
     }
@@ -74,13 +71,10 @@ class Chat extends BaseSocket{
         // Чтобы клиентская часть смогла обработать это событие у всех
         $closedUserId = $this->authUsers[$conn->resourceId]->info->id;
         $message = json_encode($this->createMessageTemplate('user-close', $closedUserId));
-        foreach ($this->clients as $client)
-            $client->send($message);
 
-
+        $this->sendMessageAll($message);
         unset($this->authUsers[$conn->resourceId]);
 
-        
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
 
@@ -102,9 +96,9 @@ class Chat extends BaseSocket{
     private function sendAllUsers(ConnectionInterface $conn){
         $message = $this->createMessageTemplate('connect', []);
         $jsonMessage = null;
+
         foreach ($this->authUsers as $user) {
             if($user->info !== null) {
-                var_dump($user->info);
                 array_push($message['value'],
                     ['id' => $user->info->id, 'firstname' => $user->info->name, 'secondname' => $user->info->secondName]);
             }

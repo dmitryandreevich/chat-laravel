@@ -14,9 +14,11 @@ class PrivateChatController extends Controller
         $companion = User::find($id);
 
         $history = MessageHistory::whereRaw('(sender = ? and receiver = ?) or (sender = ? and receiver = ?)', [$user->id, $companion->id, $companion->id, $user->id])->get();
-        foreach ($history as $msg) // если отправитель сообщения не является тем, к кому в лс заходит пользователь
-                                    // значит имя отправителя == имени того, кто отправил запрос на вход в личные сообщения
+        // если отправитель сообщения не является тем, к кому в лс заходит пользователь
+        // значит имя отправителя == имени того, кто отправил запрос на вход в личные сообщения
+        foreach ($history as $msg)
             $msg->firstname = $msg->sender != $id ? $user->name : $companion->name;
+
         return view('chat.private.chat',[
             'user' => $user,
             'companion' => $companion,

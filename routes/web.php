@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth','prefix' => '/profile', 'namespace' => 'Pro
     Route::get('/edit', 'UpdateController@index')->name('profileUpdatePage');
     Route::put('/edit/update', 'UpdateController@update')->name('profileUpdate');
 });
+
 Route::group(['middleware' => 'auth','prefix' => 'friends'],function (){
     Route::get('/', 'FriendsController@index')->name('friends');
     Route::get('/requests', 'FriendsController@requests')->name('requests');
@@ -31,16 +32,18 @@ Route::group(['middleware' => 'auth','prefix' => 'friends'],function (){
     Route::get('/delete/id{user}','FriendsController@cancelRequest')->name('friendsCancelRequest');
     Route::get('/accept/id{user}','FriendsController@acceptRequest')->name('friendsAcceptRequest');
 });
+
 Route::resource('publications','PublicationController',[
     'except' => ['create']
 ]);
+
 Route::post('publications/givelike','PublicationController@giveLike')->name('publications.givelike');
 
 Route::get('/people','PeopleController@index')->name('people')->middleware('auth');
 
-Route::get('/chat/shared','ChatController@index')->name('sharedChat')->middleware('auth');
+Route::get('/chat/','ChatController@index')->name('chat.index')->middleware('auth');
+
 Route::get('/pm/id{id}','PrivateChatController@show')->name('private.show')->middleware('privateChat');
-    // написать свой middleware для проверки в друзьях ли он или нет
 
 Route::get('/', function (){
    return view('main');

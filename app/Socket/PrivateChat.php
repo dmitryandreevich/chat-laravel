@@ -41,7 +41,7 @@ class PrivateChat extends BaseSocket
 
         switch ($message->type){
             case 'connect':{
-                $value = json_decode(Crypt::decrypt($message->value));
+                $value = json_decode( Crypt::decrypt($message->value) );
 
                 // получаем объект юзера который отправил запрос и юзера который является собеседником
                 $user = User::find($value->userId);
@@ -53,15 +53,13 @@ class PrivateChat extends BaseSocket
                 // а так же говорим, что в комнате ждут ещё юзера с id n
                 $this->chatClients[$from->resourceId] = $chatClient;
 
-                if(!$room)
-                {
-                    $r = new ChatRoom( $chatClient, $companion->id);
+                if(!$room) {
+                    $r = new ChatRoom($chatClient, $companion->id);
                     array_push($this->rooms, $r);
-                    echo 'Server was create new room! ';
-                }
-                else {// если пользователь который присоединяется, имеет уже зарезирвированную комнату для него
+                    echo "Server was create new room!\n";
+                } else {// если пользователь который присоединяется, имеет уже зарезирвированную комнату для него
                     $room->join($chatClient);
-                    echo 'Client was join in room';
+                    echo "Client was join in room\n";
                 }
                 break;
             }
@@ -72,33 +70,34 @@ class PrivateChat extends BaseSocket
 
                 $text = $value->text;
                 $room = $this->findRoomWithClient($this->chatClients[$from->resourceId]);
+
                 if($room !== false) {
                     $sender = $this->chatClients[$from->resourceId];
                     $response = $this->createMessageTemplate('message',['id' => $sender->info->id, 'firstname' => $sender->info->name,
                         'secondname' => $sender->info->secondName, 'text' => $text,'avatar' => $sender->info->avatar]);
+
                     foreach ($room->getClients() as $client) {
-                        $client->conn->send(json_encode($response));
+                        $client->conn->send( json_encode($response) );
                     }
                 }
 
-                MessageHistory::create(['sender' => $senderId, 'receiver' => $companionId, 'text' => $text]);
-
+                MessageHistory::create( ['sender' => $senderId, 'receiver' => $companionId, 'text' => $text] );
                 break;
             }
         }
-        var_dump(json_encode($this->rooms));
     }
     public function onClose(ConnectionInterface $conn) {
-        // The connection is closed, remove it, as we can no longer send it messages
+
         $this->clients->detach($conn);
         $chatClient = $this->chatClients[$conn->resourceId];
         $room = $this->findRoomWithClient($chatClient); // получаем комнату, если он есть там
-        if(is_object($room)){
-            echo 'Exit room';
+
+        if( is_object($room) ){
+            echo "Client exited of room\n";
             $room->exit($chatClient);
-            if($room->isEmpty()) {
+            if( $room->isEmpty() ) {
                 unset($this->rooms[array_search($room, $this->rooms)]);
-                echo 'Room is empty and was deleted';
+                echo "Room is empty and was deleted\n";
             }
         }
         unset($this->chatClients[$conn->resourceId]);
@@ -117,7 +116,7 @@ class PrivateChat extends BaseSocket
     private function findRoomWithClient($client){
         foreach ($this->rooms as $room) {
             $index = array_search($client, $room->getClients());
-            if(is_int($index)) return $room;
+            if( is_int($index) ) return $room;
         }
         return false;
     }

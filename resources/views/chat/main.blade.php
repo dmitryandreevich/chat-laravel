@@ -56,6 +56,7 @@
                      $encryptedJsonUser = \Illuminate\Support\Facades\Crypt::encrypt($jsonUser);
                 ?>
                 var openMessage = {'type':'connect', 'value' : '<?= $encryptedJsonUser ?>'};
+
                 socket.send(JSON.stringify(openMessage));
             };
             socket.onmessage = function(event){
@@ -71,7 +72,6 @@
                     () =>{ // if new user join into chat
                         addUser(message.value)
                         appendNewMessage(message.value, true);
-
                     },
                     () =>{ // if user will disconected
                         console.log(message);
@@ -81,8 +81,6 @@
                         appendNewMessage(message.value);
                     }
                 )
-
-
             }
             socket.onclose = function(event){
                 let message = JSON.parse(event.data);
@@ -91,16 +89,14 @@
                 deleteUser(message.value);
             }
             socket.onerror = function(event){
-                $(
-                    "#dialog"
-                ).dialog();
+                $("#dialog").dialog();
             }
             $(document).keypress(function(e) {
                 if(e.which == 13) {
                     sendMessageAll(socket);
                 }
             });
-            $('.send-all').click( () => {
+            $('.send-all').click( function() {
                 sendMessageAll(socket);
             });
         });

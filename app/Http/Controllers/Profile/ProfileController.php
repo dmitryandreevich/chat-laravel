@@ -24,7 +24,6 @@ class ProfileController extends Controller
             'friends' => $friends
         ]);
     }
-
     public function show(User $user){
         $publications = Publication::getAll($user->id);
         $friends = FriendsController::getAllFriends($user->id);

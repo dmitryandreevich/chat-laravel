@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-4 offset-md-0">
             <div class="profile-block">
-                <img src="{{ asset("storage/avatars/$user->avatar") }}" alt="" class="photo-profile">
+                <img src="{{ asset("storage/avatars/$user->avatar") }}" alt="" class="card-img-top">
 
                 <a href="{{ route('private.show', ['id' => $user->id]) }}" class="btn btn-outline-primary" style="width: 100%">Написать сообщение</a>
 
